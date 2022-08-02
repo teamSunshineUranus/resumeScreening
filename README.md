@@ -1,5 +1,3 @@
-# resumeScreening
-Maven Java project to screen resume files with defined criteria.
 
 # **Resume Screening Application**
 
