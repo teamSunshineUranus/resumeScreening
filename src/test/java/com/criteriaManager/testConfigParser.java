@@ -9,8 +9,8 @@ public class testConfigParser {
 	@Test
 	public void testconfigParser() {
 		RSAConfigParser rsaconfig = new RSAConfigParser();
-		//11 Criteria tags are now defined in the config file
-		assertEquals(11, rsaconfig.getcriteriaCnt());
+		//3 are now defined in the config file
+		assertEquals(3, rsaconfig.getcriteriaCnt());
 	}
 	
 	

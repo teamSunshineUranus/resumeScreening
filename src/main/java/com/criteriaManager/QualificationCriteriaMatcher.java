@@ -1,12 +1,11 @@
 package com.criteriaManager;
 
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.debugprint.rsaDebug;
+import com.regexSearch.RSARegexsearch;
 
-public class QualificationCriteria implements RSACriteriaList{
+public class QualificationCriteriaMatcher implements RSACriteriaList{
 	//List to store Qualification related key values.
 	private ArrayList<String> ValueList;
 	private int searchStatus = 0;
@@ -38,7 +37,7 @@ public class QualificationCriteria implements RSACriteriaList{
 
 	}
 	
-	public QualificationCriteria() {
+	public QualificationCriteriaMatcher() {
 		ValueList = new ArrayList<String>();
 	}
 	
@@ -73,14 +72,12 @@ public class QualificationCriteria implements RSACriteriaList{
 				strRegex = "\\b"+keyValue+"\\b";
 			}
 			rsaDebug.print("Regex ::"+strRegex);
-
-			Matcher matcher = Pattern.compile(strRegex).matcher(fileData);
-			rsaDebug.print(keyValue+" :: "+strRegex);
-			while(matcher.find()){
+			String outStr = RSARegexsearch.regexWordMatch(strRegex, fileData, false);
+			if(outStr.length() > 0) {
 				++searchStatus;
-				//rsaDebug.print("Found at " + matcher.group());
-				return keyValue;
+				return outStr;
 			}
+
 		}
 		return "****";
 	}

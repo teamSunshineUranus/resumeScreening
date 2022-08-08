@@ -1,17 +1,14 @@
 package com.criteriaManager;
 
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.regexSearch.RSARegexsearch;
 
-import com.debugprint.rsaDebug;
-
-public class SkillCriteria implements RSACriteriaList {
+public class SkillCriteriaMatcher implements RSACriteriaList {
 	//List to store Skill related key values.
 	private ArrayList<String> ValueList;
 	private int searchStatus = 0;
 	
-	public SkillCriteria() {
+	public SkillCriteriaMatcher() {
 		
 		ValueList = new ArrayList<>();
 	}
@@ -44,17 +41,14 @@ public class SkillCriteria implements RSACriteriaList {
 		for(String keyValue : ValueList)
 		{
 			String strRegex = "\\b"+keyValue+"\\b";
-	        Pattern pattern = Pattern.compile(strRegex,Pattern.CASE_INSENSITIVE);
-	        Matcher matcher = pattern.matcher(fileData);
-	        rsaDebug.print("Keyvalue = "+strRegex);
 
-	        while(matcher.find()){
-	        	++searchStatus;
-	            rsaDebug.print("Skill Match found");
-	            return keyValue;
-	        }
+			String outStr = RSARegexsearch.regexWordMatch(strRegex, fileData, true);
+			if(outStr.length() > 0) {
+				++searchStatus;
+				return outStr;
+			}
 		}
-		return "****";
+		return"****";
 	}
 
 }

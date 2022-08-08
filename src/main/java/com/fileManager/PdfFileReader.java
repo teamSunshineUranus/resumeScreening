@@ -4,7 +4,6 @@ import java.io.File;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
-import org.apache.pdfbox.text.PDFTextStripperByArea;
 
 public class PdfFileReader implements RSAFileReader {
 	/*

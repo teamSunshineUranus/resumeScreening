@@ -25,7 +25,7 @@ public class RSAManager
 		
 		//Parse the input config file and build criteria data list.
 		rsaconfig = new RSAConfigParser();
-		if(rsaconfig.getcriteriaCnt() == 0){
+		if(RSAConfigParser.getcriteriaCnt() == 0){
 			System.err.println("Failed to build criteria");
 		}
 		//Check whether the resume folder has resume files.

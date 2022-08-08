@@ -2,18 +2,16 @@ package com.criteriaManager;
 
 import java.time.temporal.ValueRange;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.debugprint.rsaDebug;
+import com.regexSearch.RSARegexsearch;
 
-public class ExperienceCriteria implements RSACriteriaList{
+public class ExperienceCriteriaMatcher implements RSACriteriaList{
 	//List to store Experience related key values.
 	private ArrayList<String> ValueList;
 	private int ExperienceValue = 0;
 	private int searchStatus = 0;
 	
-	public ExperienceCriteria() {
+	public ExperienceCriteriaMatcher() {
 		ValueList = new ArrayList<String>();
 	}
 	
@@ -41,21 +39,18 @@ public class ExperienceCriteria implements RSACriteriaList{
 	 */
 	private String searchExp(String fileData, String regexStr)
 	{
-		Pattern tok_pattern = Pattern.compile(regexStr,Pattern.CASE_INSENSITIVE);
-		Matcher tok_matcher = tok_pattern.matcher(fileData);
-
-		while (tok_matcher.find())
+		String lineStr = RSARegexsearch.regexFetchAllMatches(regexStr,fileData);
+		if(lineStr.length()>0)
 		{
-			Pattern year_pattern = Pattern.compile("\\d+(\\.\\d+)?");
-		    Matcher year_matcher = year_pattern.matcher(tok_matcher.group().toString());
-		    while (year_matcher.find())
-		    {
-		    	ExperienceValue = (int) Float.parseFloat(year_matcher.group().toString());
+			String numStr = RSARegexsearch.regexWordMatch("\\d+(\\.\\d+)?", lineStr, true);
+	        if(numStr.length()>0)
+	        {
+	        	ExperienceValue = (int) Float.parseFloat(numStr);
 				rsaDebug.print("Experience:"+ExperienceValue);
 				if(isExperienceEligible())
 					++searchStatus;
-				return(year_matcher.group().toString());
-			}
+				return numStr;
+	        }
 		}
 		return("**");
 	}

@@ -23,7 +23,7 @@ public class RSAConfigParser {
 	
 	private static final String[] criteriaXMLTag = {"Skill", "Qualification","MinExperience","MaxExperience"};
 	//Criteria field count to mark the resume file as eligible candidate.
-	private int criteriaCnt = 0;
+	private static int criteriaCnt = 0;
 	private static File configFile;
 	
 	/*
@@ -35,12 +35,23 @@ public class RSAConfigParser {
 		criteriaList = new ArrayList<RSACriteriaList>();
 		addCriteriaList();
 		CriteriaBuilder();
+		fetchcriteriaCnt();
 	}
 	/*
 	 * Get method for criteria count  
 	 */
-	public int getcriteriaCnt() {
+	public static int getcriteriaCnt() {
 		return criteriaCnt;
+	}
+	/*
+	 * Method to calculate criteria count  
+	 */
+	private void fetchcriteriaCnt() {
+		for(RSACriteriaList list: criteriaList)
+		{
+			if(list.getValueList().size()>0)
+				++criteriaCnt;
+		}
 	}
 	/*
 	 * Get method for criteria object List  
@@ -117,7 +128,6 @@ public class RSAConfigParser {
 					rsaDebug.print("value :: "+ data);
 					fillCriteriaCollection(cTag, data);
 		        }
-		        ++criteriaCnt;
 		    } 
 	    }
 	    return true;
@@ -126,9 +136,9 @@ public class RSAConfigParser {
 	 * create instances for the criteria objects.
 	 */
     private void addCriteriaList() {	
-    	criteriaList.add(new SkillCriteria());
-    	criteriaList.add(new QualificationCriteria());
-    	criteriaList.add(new ExperienceCriteria());
+    	criteriaList.add(new SkillCriteriaMatcher());
+    	criteriaList.add(new QualificationCriteriaMatcher());
+    	criteriaList.add(new ExperienceCriteriaMatcher());
     }
 
 }//close class

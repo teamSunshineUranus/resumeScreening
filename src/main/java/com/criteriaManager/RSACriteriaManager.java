@@ -20,6 +20,16 @@ public class RSACriteriaManager{
 		outputString.add(outString);
 	}
 	/*
+	 * Method to get Personal Information from resume data
+	 */
+	private void buildPersonalInfo(RSAFileManager fileManager)
+	{
+		setOutputString(fileManager.getFileName());
+		setOutputString((new EmailAddressReader()).getEmailAdd(fileManager.getFileData()));
+		setOutputString((new MobileNumberReader()).getMobileNo(fileManager.getFileData()));
+		setOutputString((new CareerBreakInfoReader()).getCareerStatus(fileManager.getFileData()));
+	}
+	/*
 	 * For each resume file, the file data is passed to criteria classes
 	 * to perform the search operation.Based on the search status, the candidate
 	 * is marked as eligible or not.
@@ -28,7 +38,7 @@ public class RSACriteriaManager{
 	{
 		int eligibleCnt = 0;
 		
-		setOutputString(fileManager.getFileName());
+		buildPersonalInfo(fileManager);
 		
 		for(RSACriteriaList list: criteriaList) {
 			list.resetSearchStatus();
@@ -36,10 +46,13 @@ public class RSACriteriaManager{
 			eligibleCnt += list.getSearchStatus();
 		}
 		
-		if(eligibleCnt == criteriaList.size())
-			setOutputString("yes");
-	    else
-	    	setOutputString("no");
+		setOutputString((eligibleCnt == RSAConfigParser.getcriteriaCnt())?"yes":"no");
+
+		if(new TechnicalSkillReader().canReadTechnicalSkills())
+			setOutputString(new TechnicalSkillReader().readTechnicalSkill(fileManager.getFileData()));
+		
+		setOutputString(new TechnicalSkillReader().fetchWholeSkillData(fileManager.getFileData()));
+		setOutputString(new TechnicalSkillReader().fetchCertificationData(fileManager.getFileData()));
 		rsaDebug.print("print lists:"+criteriaList);
 		
 		String[] outStr = outputString.toArray(new String[0]);
