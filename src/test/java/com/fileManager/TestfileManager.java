@@ -8,7 +8,7 @@ import java.io.File;
 import org.junit.BeforeClass;
 import org.junit.Test; 
 
-public class testfileManager {
+public class TestfileManager {
 	static File file;
 	@BeforeClass  
     public static void setUpBeforeClass(){  
