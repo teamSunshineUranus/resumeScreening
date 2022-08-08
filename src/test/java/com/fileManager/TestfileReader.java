@@ -3,7 +3,7 @@ package com.fileManager;
 import java.io.File;
 import org.junit.Test; 
 
-public class testfileReader {
+public class TestfileReader {
 	@Test
 	public void testPDFgetFileData(){
 		
