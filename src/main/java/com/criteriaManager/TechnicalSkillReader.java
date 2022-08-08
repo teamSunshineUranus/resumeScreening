@@ -23,7 +23,8 @@ public class TechnicalSkillReader {
 		try {
 			CSVReader reader = new CSVReader(new FileReader(RSAFileUtils.getFolderPath("/data/")+"SecondarySkills.csv"));
 			skillData = reader.readAll();
-			isReady = true;
+			if(skillData.size()>0)
+				isReady = true;
 		}
 		catch (Exception e) {
             System.err.println(e.getMessage());
